@@ -15,20 +15,10 @@ public class ToHTML {
     public void parse(String xml){
         PreparedColumns preparedColumns = new PreparedColumns();
         ArrayList<Column> columns = preparedColumns.prepareColumns(xml);
-        TableType type = new TableType();
-        int[] tableType = type.define(columns);
-
-        InLineTable inLine = new InLineTable();
-        InListTable inList = new InListTable();
+        int[] tableType = define(columns);
 
         String html = getHTMLHeader();
-        if(tableType[0] == 1){
-            html += inLine.createDoc(columns);
-        }
-        else if(tableType[0] == 0){
-            int columnsCount = tableType[1];
-           html += inList.createDoc(columns, columnsCount);
-        }
+        html += tableType[0] == 1 ? createTableInLine(columns) : createTableInList(columns, tableType[1]);
         html += getHTMLFooter();
 
         System.out.println(html);
@@ -54,6 +44,21 @@ public class ToHTML {
                         "\t</html>";
 
         return footer;
+    }
+
+    private String createTableInList(ArrayList<Column> columns, int columnsCount){
+        InListTable inList = new InListTable();
+        return inList.createDoc(columns, columnsCount);
+    }
+
+    private String createTableInLine(ArrayList<Column> columns){
+        InLineTable inLine = new InLineTable();
+        return inLine.createDoc(columns);
+    }
+
+    private int[] define(ArrayList<Column> columns){
+        TableType type = new TableType();
+        return type.define(columns);
     }
 
 
