@@ -9,10 +9,6 @@ import java.util.ArrayList;
 
 public class PreparedColumns {
 
-    // ДЛЯ ВЫЯВЛЕНИЯ КАКИМ ОБРАЗОМ СТРОИТЬ ТАБЛИЦУ В СТРОКУ ИЛИ КВАДРАТНУЮ
-    // String.matches() ПО именам колонок возможно
-//    private ArrayList<Column> preparedColumns = new ArrayList<>();  // ЭТО НУЖНО УБРАТЬ В ГЛАВНЫЙ МЕТОД
-//    private Stack<String> columnName = new Stack<>();
     private ArrayList<ColumnName> columnName = new ArrayList<>();
 
     public ArrayList<Column> prepareColumns(String xml) {
@@ -22,7 +18,7 @@ public class PreparedColumns {
 
         for (int i = 1; i < tags.size(); i++) {
             TagPair tmp = tags.get(i);
-            lastBlockClosed(tmp); //переименовать
+            lastBlockClosed(tmp);
             columns.addAll(extractColumnAndCell(tmp));
         }
         return columns;
@@ -98,13 +94,12 @@ public class PreparedColumns {
         return column;
     }
 
-    private void addNameToNextColumn(String str, int closePosition) {  //Переименовать
+    private void addNameToNextColumn(String str, int closePosition) {
         if (columnName.size() == 0) {
             columnName.add(new ColumnName(str, closePosition));
         } else {
             columnName.add(new ColumnName("." + str, closePosition));
         }
-
     }
 
     private boolean itWithoutInnerTags(TagPair tag) {
