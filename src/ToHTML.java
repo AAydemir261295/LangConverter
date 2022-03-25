@@ -8,10 +8,6 @@ import java.util.ArrayList;
 
 public class ToHTML {
 
-    private String HTML = "";
-
-
-    // добавить колонку над всеми с названием первого тэга который не входит никуда
     public void parse(String xml){
         PreparedColumns preparedColumns = new PreparedColumns();
         ArrayList<Column> columns = preparedColumns.prepareColumns(xml);
@@ -24,8 +20,6 @@ public class ToHTML {
         System.out.println(html);
     }
 
-
-    //подсчет колонок если кратное колво то показать в виде таблицы списка иначе таблица в одну строку
     private String getHTMLHeader() {
         String header = "<!DOCTYPE html>\n" +
                 "<html>\n" +
